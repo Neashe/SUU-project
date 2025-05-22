@@ -1,0 +1,12 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: appconfig
+spec:
+  tracing:
+    samplingRate: "1"
+    otel:
+      endpointAddress: "localhost:4317"
+      protocol: grpc
+  metrics:
+    enabled: true
