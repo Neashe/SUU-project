@@ -42,7 +42,7 @@
 
 ### 2.1 Podstawy teoretyczne
 
-a) **Dapr (Distributed Application Runtime)** to otwartoźródłowy framework stworzony z myślą o uproszczeniu tworzenia mikrousług. Udostępnia zestaw wbudowanych API, które ułatwiają implementację funkcjonalności niezbędnych w architekturze mikrousług, takich jak:
+**a) Dapr (Distributed Application Runtime)** to otwartoźródłowy framework stworzony z myślą o uproszczeniu tworzenia mikrousług. Udostępnia zestaw wbudowanych API, które ułatwiają implementację funkcjonalności niezbędnych w architekturze mikrousług, takich jak:
 
 - komunikacja między usługami,
 - zarządzanie stanem,
@@ -53,7 +53,7 @@ Dzięki temu programiści mogą skupić się na logice biznesowej, zamiast na im
 
 Nowoczesne systemy mikrousługowe muszą być nie tylko funkcjonalne, ale też odporne na błędy i łatwe do monitorowania. W tym celu Dapr integruje się z **OpenTelemetry (OTel)** – otwartym standardem służącym do zbierania danych telemetrycznych z aplikacji rozproszonych.
 
-b) **OpenTelemetry** to projekt rozwijany przez Cloud Native Computing Foundation (CNCF), który standaryzuje sposób zbierania i przesyłania danych telemetrycznych, takich jak:
+**b) OpenTelemetry** to projekt rozwijany przez Cloud Native Computing Foundation (CNCF), który standaryzuje sposób zbierania i przesyłania danych telemetrycznych, takich jak:
 
 - **Traces (śledzenie)** – dane opisujące przepływ żądań między komponentami systemu, pomocne w analizie wydajności i błędów,
 - **Metrics (metryki)** – liczby opisujące stan aplikacji i infrastruktury (np. czas odpowiedzi, liczba żądań, użycie zasobów),
@@ -61,7 +61,7 @@ b) **OpenTelemetry** to projekt rozwijany przez Cloud Native Computing Foundatio
 
 Dzięki OTel dane mogą być eksportowane do różnych narzędzi monitorujących i analizujących, takich jak Prometheus, Grafana czy Jaeger, co pozwala uzyskać pełen obraz działania systemu.
 
-c) **Obserwowalność z użyciem Dapr i OTel**
+**c) Obserwowalność z użyciem Dapr i OTel**
 
 Dapr automatycznie generuje dane telemetryczne i przekazuje je zgodnie ze standardem OpenTelemetry. Ułatwia to monitorowanie systemu bez konieczności ręcznej integracji narzędzi do logowania, metryk i śledzenia zapytań.
 
