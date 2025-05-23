@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      GF_INSTALL_PLUGINS: "grafana-piechart-panel"
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol/config.yaml
+    command: ["--config", "/etc/otelcol/config.yaml"]
+    ports:
+      - "4317:4317"
+      - "8889:8889"
+    depends_on:
+      - prometheus
