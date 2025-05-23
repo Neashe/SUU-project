@@ -42,7 +42,7 @@ Celem projektu jest stworzenie prostego systemu monitoringu aplikacji webowej op
 
 ### 2.1 Podstawy teoretyczne
 
-**a) Dapr (Distributed Application Runtime)** to otwartoźródłowy framework stworzony z myślą o uproszczeniu tworzenia mikrousług. Udostępnia zestaw wbudowanych API, które ułatwiają implementację funkcjonalności niezbędnych w architekturze mikrousług, takich jak:
+**a) Dapr (Distributed Application Runtime)** to open-source framework stworzony z myślą o uproszczeniu tworzenia mikrousług. Udostępnia zestaw wbudowanych API, które ułatwiają implementację funkcjonalności niezbędnych w architekturze mikrousług, takich jak:
 
 - komunikacja między usługami,
 - zarządzanie stanem,
