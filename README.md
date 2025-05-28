@@ -94,17 +94,24 @@ Studium przypadku przedstawia prostą aplikację FastAPI działającą w kontene
 
 ## 4. Architektura rozwiązania
 
-- Aplikacja FastAPI — generuje i eksponuje metryki OTEL.
+Jokes to aplikacja zbudowana w architekturze mikroserwisowej, umożliwiająca anonimowe przeglądanie, ocenianie oraz rankingowanie żartów i memów. Składa się z sześciu niezależnych serwisów:
 
-- Dapr — konfiguruje eksport metryk i śledzeń z aplikacji do OTEL Collector.
+- Content Service – zarządza bazą żartów i memów oraz udostępnia je losowo lub w formie rankingu.
 
-- OpenTelemetry Collector — odbiera metryki OTLP, przetwarza i udostępnia je w formacie Prometheus.
+- Rating Service – umożliwia użytkownikom ocenianie treści (np. pozytywnie lub negatywnie) i przechowuje dane o głosach.
 
-- Prometheus — zbiera metryki z OTEL Collectora.
+- Ranking Service – generuje listę najlepiej ocenianych treści na podstawie danych z Rating Service.
 
-- Grafana — łączy się z Prometheusem i wyświetla wykresy metryk.
+- Stats Service – zbiera podstawowe statystyki, takie jak liczba ocen dziennie lub liczba przeglądanych treści.
 
-Wszystkie usługi uruchomione są jako kontenery w Docker Compose, współdzieląc sieć, aby mogły się wzajemnie komunikować.
+- Content Delivery Service – odpowiada za serwowanie obrazków memów, jeśli są przechowywane lokalnie lub w chmurze.
+
+- Frontend Gateway – pełni rolę API Gateway i pośrednika pomiędzy frontendem a mikroserwisami, agregując dane w jednolitym formacie.
+
+Wszystkie serwisy komunikują się między sobą za pośrednictwem REST API. Aplikacja nie wymaga logowania ani kont użytkowników – działa całkowicie anonimowo.
+
+Poniżej zaprezentowano diagram architektury:
+![Diagram architektury](diagram.png)
 
 ---
 
