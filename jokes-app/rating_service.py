@@ -1,0 +1,41 @@
+from fastapi import FastAPI
+from random import randint
+from time import sleep
+
+from opentelemetry import metrics
+from opentelemetry.sdk.metrics import MeterProvider
+from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
+from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+
+exporter = OTLPMetricExporter(endpoint="http://otel-collector:4318", insecure=True)
+reader = PeriodicExportingMetricReader(exporter)
+provider = MeterProvider(metric_readers=[reader])
+metrics.set_meter_provider(provider)
+
+meter = metrics.get_meter(__name__)
+request_counter = meter.create_counter(
+    name="rating_requests_total",
+    unit="1",
+    description="Total number of requests to Rating Service",
+)
+
+app = FastAPI()
+FastAPIInstrumentor().instrument_app(app)
+
+ratings = {}
+
+@app.post("/rate/{joke_id}")
+def rate_joke(joke_id: int, rating: int):
+    request_counter.add(1, {"endpoint": "/rate"})
+    sleep(randint(1, 2))
+    ratings.setdefault(joke_id, []).append(rating)
+    return {"joke_id": joke_id, "ratings": ratings[joke_id]}
+
+@app.get("/rating/{joke_id}")
+def get_rating(joke_id: int):
+    request_counter.add(1, {"endpoint": "/rating"})
+    sleep(randint(1, 2))
+    joke_ratings = ratings.get(joke_id, [])
+    avg = sum(joke_ratings) / len(joke_ratings) if joke_ratings else 0
+    return {"joke_id": joke_id, "average_rating": avg, "ratings": joke_ratings}
