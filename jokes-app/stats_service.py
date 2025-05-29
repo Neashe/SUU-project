@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from random import randint
-from time import sleep
 from datetime import datetime
 from opentelemetry import metrics
 from opentelemetry.sdk.metrics import MeterProvider
@@ -33,17 +32,15 @@ def today():
     return datetime.now().strftime("%Y-%m-%d")
 
 @app.post("/stats/rating")
-def add_rating_stat():
+def add_rating_stat(joke_id: int = None):
     request_counter.add(1, {"endpoint": "/stats/rating"})
-    sleep(randint(1, 2))
     d = today()
     stats["ratings_per_day"][d] = stats["ratings_per_day"].get(d, 0) + 1
     return {"date": d, "ratings": stats["ratings_per_day"][d]}
 
 @app.post("/stats/view")
-def add_view_stat():
+def add_view_stat(joke_id: int = None):
     request_counter.add(1, {"endpoint": "/stats/view"})
-    sleep(randint(1, 2))
     d = today()
     stats["views_per_day"][d] = stats["views_per_day"].get(d, 0) + 1
     return {"date": d, "views": stats["views_per_day"][d]}
@@ -51,5 +48,4 @@ def add_view_stat():
 @app.get("/stats")
 def get_stats():
     request_counter.add(1, {"endpoint": "/stats"})
-    sleep(randint(1, 2))
     return stats

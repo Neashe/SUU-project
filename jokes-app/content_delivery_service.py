@@ -1,7 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import FileResponse
 from random import randint
-from time import sleep
 import os
 from opentelemetry import metrics
 from opentelemetry.sdk.metrics import MeterProvider
@@ -30,7 +29,6 @@ os.makedirs(MEDIA_DIR, exist_ok=True)
 @app.post("/upload")
 def upload_file(file: UploadFile = File(...)):
     request_counter.add(1, {"endpoint": "/upload"})
-    sleep(randint(1, 2))
     file_path = os.path.join(MEDIA_DIR, file.filename)
     with open(file_path, "wb") as f:
         f.write(file.file.read())
@@ -39,7 +37,6 @@ def upload_file(file: UploadFile = File(...)):
 @app.get("/media/{filename}")
 def get_file(filename: str):
     request_counter.add(1, {"endpoint": "/media"})
-    sleep(randint(1, 2))
     file_path = os.path.join(MEDIA_DIR, filename)
     if not os.path.exists(file_path):
         return {"error": "File not found"}

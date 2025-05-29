@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from random import randint
-from time import sleep
 from typing import List
+import httpx
 
 from opentelemetry import metrics
 from opentelemetry.sdk.metrics import MeterProvider
@@ -33,7 +33,16 @@ mock_jokes = [
 @app.get("/ranking")
 def get_ranking(limit: int = 10):
     request_counter.add(1, {"endpoint": "/ranking"})
-    sleep(randint(1, 2))
-    # In a real implementation, fetch ratings from Rating Service and sort
-    sorted_jokes = sorted(mock_jokes, key=lambda x: x["average_rating"], reverse=True)
-    return {"ranking": sorted_jokes[:limit]}
+    # Fetch all jokes from Content Service
+    try:
+        with httpx.Client() as client:
+            jokes_resp = client.get("http://localhost:8001/jokes")
+            jokes = jokes_resp.json().get("jokes", [])
+            for joke in jokes:
+                rating_resp = client.get(f"http://localhost:8002/rating/{joke['id']}")
+                rating = rating_resp.json().get("average_rating", 0)
+                joke["average_rating"] = rating
+            sorted_jokes = sorted(jokes, key=lambda x: x["average_rating"], reverse=True)
+            return {"ranking": sorted_jokes[:limit]}
+    except Exception as e:
+        return {"error": str(e)}

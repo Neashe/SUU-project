@@ -23,19 +23,19 @@ request_counter = meter.create_counter(
 app = FastAPI()
 FastAPIInstrumentor().instrument_app(app)
 
-ratings = {}
+ratings = {}  # {joke_id: [ratings]}
 
 @app.post("/rate/{joke_id}")
 def rate_joke(joke_id: int, rating: int):
     request_counter.add(1, {"endpoint": "/rate"})
-    sleep(randint(1, 2))
-    ratings.setdefault(joke_id, []).append(rating)
+    if joke_id not in ratings:
+        ratings[joke_id] = []
+    ratings[joke_id].append(rating)
     return {"joke_id": joke_id, "ratings": ratings[joke_id]}
 
 @app.get("/rating/{joke_id}")
 def get_rating(joke_id: int):
     request_counter.add(1, {"endpoint": "/rating"})
-    sleep(randint(1, 2))
     joke_ratings = ratings.get(joke_id, [])
     avg = sum(joke_ratings) / len(joke_ratings) if joke_ratings else 0
     return {"joke_id": joke_id, "average_rating": avg, "ratings": joke_ratings}
