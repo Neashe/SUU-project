@@ -150,17 +150,119 @@ Wszystkie usługi działają w jednej sieci Docker, dzięki czemu mogą się ze 
 
 ## 6. Metoda instalacji
 
-*TO DO*
+Przed rozpoczęciem upewnij się, że masz zainstalowane następujące narzędzia:
+
+- [Dapr CLI](https://docs.dapr.io/getting-started/install-dapr-cli/) – interfejs wiersza poleceń do zarządzania Dapr.
+- **Docker**
+- **Python 3** 
 
 ---
 
 ## 7. Jak odtworzyć projekt – krok po kroku
 
-*TO DO*
+### 7.0 Inicjalizacja zależności
 
-### 7.1 Podejście Infrastructure as Code
+- Uruchom Dockera
+- Wykonaj komendę:
+   ```
+   dapr init
+   ```
+- w folderze projektu zainstaluj package do pythona
+   ```
+   pip install -r requirements.txt
+   ```
+### 7.1 Uruchamianie usług z Dapr
 
-*TO DO*
+#### Content Service
+
+Aby uruchomić Content Service z użyciem Dapr:
+
+```sh
+dapr run --app-id content-service --app-port 8001 -- uvicorn jokes-app.content_service:app --host 0.0.0.0 --port 8001
+```
+
+Usługa będzie dostępna pod adresem:
+
+http://localhost:8001/jokes
+
+#### Rating Service
+
+Aby uruchomić Rating Service z użyciem Dapr:
+
+```sh
+dapr run --app-id rating-service --app-port 8002 -- uvicorn jokes-app.rating_service:app --host 0.0.0.0 --port 8002
+```
+
+Usługa będzie dostępna pod adresem:
+
+- POST http://localhost:8002/rate/{joke_id} (z ciałem JSON: `{"rating": <int>}`)
+- GET  http://localhost:8002/rating/{joke_id}
+
+#### Ranking Service
+
+Aby uruchomić Ranking Service z użyciem Dapr:
+
+```sh
+dapr run --app-id ranking-service --app-port 8003 -- uvicorn jokes-app.ranking_service:app --host 0.0.0.0 --port 8003
+```
+
+Usługa będzie dostępna pod adresem:
+
+http://localhost:8003/ranking
+
+#### Stats Service
+
+Aby uruchomić Stats Service z użyciem Dapr:
+
+```sh
+dapr run --app-id stats-service --app-port 8004 -- uvicorn jokes-app.stats_service:app --host 0.0.0.0 --port 8004
+```
+
+Usługa będzie dostępna pod adresem:
+
+- POST http://localhost:8004/stats/rating  
+- POST http://localhost:8004/stats/view  
+- GET  http://localhost:8004/stats
+
+#### Content Delivery Service
+
+Aby uruchomić Content Delivery Service z użyciem Dapr:
+
+```sh
+dapr run --app-id content-delivery-service --app-port 8005 -- uvicorn jokes-app.content_delivery_service:app --host 0.0.0.0 --port 8005
+```
+
+Usługa będzie dostępna pod adresem:
+
+- POST http://localhost:8005/upload (multipart/form-data, pole: `file`)  
+- GET  http://localhost:8005/media/{filename}
+
+#### Frontend Gateway
+
+Aby uruchomić Frontend Gateway z użyciem Dapr:
+
+```sh
+dapr run --app-id frontend-gateway --app-port 8006 -- uvicorn jokes-app.frontend_gateway:app --host 0.0.0.0 --port 8006
+```
+
+Usługa będzie dostępna pod adresem:
+
+- GET http://localhost:8006/jokes/full  
+- GET http://localhost:8006/health
+
+### 7.2 Podejście Infrastructure as Code
+
+Próba uruchomienia serwisów za pomocą pojednynczego docker-compose na podstawie dokumentacji: 
+
+https://docs.dapr.io/operations/hosting/self-hosted/self-hosted-with-docker/
+
+Implementacja została zawarta w docker-compose.yaml orad Dockerfile w głównym katalogu pliku.
+
+Uruchomiona może zostać porzez wykorzystanei komendy w katalogu głownym:
+```
+docker-compose up
+```
+Niestety jeszcze nie działa to w 100% :'(
 
 ---
 
