@@ -8,7 +8,7 @@ from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
-exporter = OTLPMetricExporter(endpoint="http://otel-collector:4318", insecure=True)
+exporter = OTLPMetricExporter(endpoint="http://localhost:4317", insecure=True)
 reader = PeriodicExportingMetricReader(exporter)
 provider = MeterProvider(metric_readers=[reader])
 metrics.set_meter_provider(provider)
