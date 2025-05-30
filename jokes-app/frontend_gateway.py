@@ -28,7 +28,6 @@ FastAPIInstrumentor().instrument_app(app)
 @app.get("/jokes/full")
 async def get_full_jokes():
     request_counter.add(1, {"endpoint": "/jokes/full"})
-    sleep(randint(1, 2))
     async with httpx.AsyncClient() as client:
         jokes_resp = await client.get("http://localhost:8001/jokes")
         jokes = jokes_resp.json().get("jokes", [])
@@ -36,8 +35,10 @@ async def get_full_jokes():
             rating_resp = await client.get(f"http://localhost:8002/rating/{joke['id']}")
             rating = rating_resp.json().get("average_rating", 0)
             joke["average_rating"] = rating
-            # Optionally, add image URL if you have mapping
-            joke["image_url"] = f"/media/{joke['id']}.png"
+            if joke.get("meme"):
+                joke["image_url"] = f"http://localhost:8005/media/{joke['meme']}"
+            else:
+                joke["image_url"] = None
     return {"jokes": jokes}
 
 # Health check
