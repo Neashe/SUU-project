@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from random import randint
 from time import sleep
 import httpx
@@ -24,6 +25,14 @@ request_counter = meter.create_counter(
 app = FastAPI()
 FastAPIInstrumentor().instrument_app(app)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or ["http://localhost:3000"] for more security
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Example: Aggregate jokes with their ratings and image URLs
 @app.get("/jokes/full")
 async def get_full_jokes():
@@ -44,4 +53,16 @@ async def get_full_jokes():
 # Health check
 @app.get("/health")
 def health():
+    return {"status": "ok"}
+
+@app.post("/stats/record")
+async def record_stats(data: dict):
+    joke_id = data.get("joke_id")
+    rating = data.get("rating")
+    async with httpx.AsyncClient() as client:
+        # Always record a view
+        await client.post("http://localhost:8004/stats/view", json={"joke_id": joke_id})
+        # Send rating to Rating Service if provided
+        if rating is not None:
+            await client.post(f"http://localhost:8002/rate/{joke_id}", params={"rating": rating})
     return {"status": "ok"}

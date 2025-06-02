@@ -2,3 +2,19 @@ venv
 venv/*
 __pycache__/*
 __pycache__
+
+# Node.js/React
+node_modules/
+build/
+dist/
+
+# VSCode settings (optional)
+.vscode/
+
+# Docker
+*.log
+*.pid
+
+# OS-specific
+.DS_Store
+Thumbs.db
