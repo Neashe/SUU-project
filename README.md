@@ -164,13 +164,19 @@ Przed rozpoczęciem upewnij się, że masz zainstalowane następujące narzędzi
 
 - Uruchom Dockera
 - Wykonaj komendę:
-   ```
+   ```sh
    dapr init
    ```
 - w folderze projektu zainstaluj package do pythona
-   ```
+   ```sh
    pip install -r requirements.txt
    ```
+- w folderze projektu wykonaj następujące komendy by zainicjalizować aplikację frontendową
+   ```sh
+   cd jokes-frontend
+   npm install
+   ```
+
 ### 7.1 Uruchamianie usług z Dapr
 
 #### Content Service
@@ -250,7 +256,16 @@ Usługa będzie dostępna pod adresem:
 - GET http://localhost:8006/jokes/full  
 - GET http://localhost:8006/health
 
-### 7.2 Podejście Infrastructure as Code
+### 7.2 Uruchamianie aplikacji frontendowej
+
+Aby uruchomić aplikację frontendową należy wykonać komendy:
+
+```sh
+cd jokes-frontend
+npm start
+```
+
+### 7.3 Podejście Infrastructure as Code
 
 Próba uruchomienia serwisów za pomocą pojednynczego docker-compose na podstawie dokumentacji: 
 
