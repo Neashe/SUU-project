@@ -9,10 +9,12 @@ from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.sdk.resources import Resource
 
 exporter = OTLPMetricExporter(endpoint="http://localhost:4317", insecure=True)
 reader = PeriodicExportingMetricReader(exporter)
-provider = MeterProvider(metric_readers=[reader])
+resource = Resource.create({"service.name": "frontend-gateway"})
+provider = MeterProvider(resource=resource, metric_readers=[reader])
 metrics.set_meter_provider(provider)
 
 meter = metrics.get_meter(__name__)
