@@ -66,3 +66,9 @@ async def record_stats(data: dict):
         if rating is not None:
             await client.post(f"http://localhost:8002/rate/{joke_id}", params={"rating": rating})
     return {"status": "ok"}
+
+@app.get("/ranking")
+async def get_ranking():
+    async with httpx.AsyncClient() as client:
+        resp = await client.get("http://localhost:8003/ranking")
+        return resp.json()

@@ -39,3 +39,15 @@ def get_rating(joke_id: int):
     joke_ratings = ratings.get(joke_id, [])
     avg = sum(joke_ratings) / len(joke_ratings) if joke_ratings else 0
     return {"joke_id": joke_id, "average_rating": avg, "ratings": joke_ratings}
+
+@app.get("/ratings")
+def get_all_ratings():
+    request_counter.add(1, {"endpoint": "/ratings"})
+    all_ratings = {}
+    for joke_id, joke_ratings in ratings.items():
+        avg = sum(joke_ratings) / len(joke_ratings) if joke_ratings else 0
+        all_ratings[joke_id] = {
+            "average_rating": avg,
+            "ratings": joke_ratings
+        }
+    return {"ratings": all_ratings}

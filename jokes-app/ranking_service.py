@@ -33,14 +33,17 @@ mock_jokes = [
 @app.get("/ranking")
 def get_ranking(limit: int = 10):
     request_counter.add(1, {"endpoint": "/ranking"})
-    # Fetch all jokes from Content Service
     try:
         with httpx.Client() as client:
             jokes_resp = client.get("http://localhost:8001/jokes")
             jokes = jokes_resp.json().get("jokes", [])
+            # Fetch all ratings in one call
+            ratings_resp = client.get("http://localhost:8002/ratings")
+            all_ratings = ratings_resp.json().get("ratings", {})
             for joke in jokes:
-                rating_resp = client.get(f"http://localhost:8002/rating/{joke['id']}")
-                rating = rating_resp.json().get("average_rating", 0)
+                joke_id = joke["id"]
+                rating_info = all_ratings.get(str(joke_id)) or all_ratings.get(joke_id)
+                rating = rating_info["average_rating"] if rating_info else 0
                 joke["average_rating"] = rating
             sorted_jokes = sorted(jokes, key=lambda x: x["average_rating"], reverse=True)
             return {"ranking": sorted_jokes[:limit]}
