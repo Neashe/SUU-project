@@ -159,6 +159,7 @@ Przed rozpoczęciem upewnij się, że masz zainstalowane następujące narzędzi
 ---
 
 ## 7. Jak odtworzyć projekt – krok po kroku
+W celu uruchomieniu usług z Dapr mamy dwie możliwości: uruchomienie każdego serwisu po kolei jak przedstawiono w punkcie 7.1 lub skorzystanie z polecania z punktu 7.4, który odpali wszystkie za jednym razem.
 
 ### 7.0 Inicjalizacja zależności
 
@@ -265,19 +266,14 @@ cd jokes-frontend
 npm start
 ```
 
-### 7.3 Podejście Infrastructure as Code
+### 7.3 Uruchamienie monitoringu
 
-Próba uruchomienia serwisów za pomocą pojednynczego docker-compose na podstawie dokumentacji: 
+W celu uruchomienia kontenerów z Grafaną, Prometheusem oraz OTel (OpenTelemetry Collector), przejdź do folderu `metrics` i uruchom następujące polecenie:
 
-https://docs.dapr.io/operations/hosting/self-hosted/self-hosted-with-docker/
-
-Implementacja została zawarta w docker-compose.yaml orad Dockerfile w głównym katalogu pliku.
-
-Uruchomiona może zostać porzez wykorzystanei komendy w katalogu głownym:
-```
+```bash
 docker-compose up
-```
-Niestety jeszcze nie działa to w 100% :'(
+
+### 7.4 Podejście Infrastructure as Code
 
 Serwisy korzystające z Dapr można uruchomić za pomocą komendy:
 ```
@@ -290,15 +286,28 @@ dapr run -f .
 
 ### 8.1 Konfiguracja środowiska
 
-*TO DO*
+Konfiguracja środowiska została opisana w punktach [6](#6-metoda-instalacji) i [7.0](#7-0-inicjalizacja-zaleznosci)
 
 ### 8.2 Przygotowanie danych
 
-*TO DO*
+W folderze `grafana-dashboards` znajdują się gotowe pliki konfiguracyjne w formacie JSON, przeznaczone do importu w Grafanie. Każdy z plików reprezentuje osobny dashboard, umożliwiający monitorowanie i analizę metryk powiązanych z projektem.
+
+Aby skorzystać z tych dashboardów:
+1. Otwórz panel Grafana.
+2. Przejdź do **Dashboards > Import**.
+3. Wskaż plik JSON z folderu `grafana-dashboards` lub wklej jego zawartość.
+4. Zapisz dashboard i skonfiguruj źródło danych, jeśli to konieczne.
 
 ### 8.3 Procedura wykonawcza
 
-*TO DO*
+Aby uruchomić cały projekt w sposób uporządkowany, wykonaj następujące kroki:
+
+1. Upewnij się, że zainstalowałeś [niezbędne narzędzia](#6-metoda-instalacji).
+2. Zaincjalizuj [zależności projektu](#7-0-inicjalizacja-zaleznosci).
+3. Uruchom [aplikację frontendową](#7-2-uruchamianie-aplikacji-frontendowej).
+4. Uruchom [monitoring (Grafana, Prometheus, OTel)](#7-3-uruchomienie-monitoringu).
+5. Uruchom [serwisy z Dapr za pomocą podejścia Infrastructure as Code](#7-4-podejscie-infrastructure-as-code).
+
 
 ### 8.4 Prezentacja wyników
 
