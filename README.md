@@ -279,6 +279,11 @@ docker-compose up
 ```
 Niestety jeszcze nie działa to w 100% :'(
 
+Serwisy korzystające z Dapr można uruchomić za pomocą komendy:
+```
+dapr run -f .
+```
+
 ---
 
 ## 8. Kroki wdrożenia demonstracyjnego

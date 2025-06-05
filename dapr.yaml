@@ -1,0 +1,31 @@
+version: 1
+apps:
+  - appID: content-service
+    appDirPath: .
+    appPort: 8001
+    command: ["uvicorn", "jokes-app.content_service:app", "--host", "0.0.0.0", "--port", "8001"]
+
+  - appID: frontend-gateway
+    appDirPath: .
+    appPort: 8006
+    command: ["uvicorn", "jokes-app.frontend_gateway:app", "--host", "0.0.0.0", "--port", "8006"]
+
+  - appID: ranking-service
+    appDirPath: .
+    appPort: 8003
+    command: ["uvicorn", "jokes-app.ranking_service:app", "--host", "0.0.0.0", "--port", "8003"]
+
+  - appID: rating-service
+    appDirPath: .
+    appPort: 8002
+    command: ["uvicorn", "jokes-app.rating_service:app", "--host", "0.0.0.0", "--port", "8002"]
+
+  - appID: stats-service
+    appDirPath: .
+    appPort: 8004
+    command: ["uvicorn", "jokes-app.stats_service:app", "--host", "0.0.0.0", "--port", "8004"]
+
+  - appID: content-delivery-service
+    appDirPath: .
+    appPort: 8005
+    command: ["uvicorn", "jokes-app.content_delivery_service:app", "--host", "0.0.0.0", "--port", "8005"]
