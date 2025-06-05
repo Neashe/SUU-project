@@ -272,6 +272,7 @@ W celu uruchomienia kontenerów z Grafaną, Prometheusem oraz OTel (OpenTelemetr
 
 ```bash
 docker-compose up
+```
 
 ### 7.4 Podejście Infrastructure as Code
 
@@ -292,28 +293,47 @@ Konfiguracja środowiska została opisana w punktach [6](#6-metoda-instalacji) i
 
 W folderze `grafana-dashboards` znajdują się gotowe pliki konfiguracyjne w formacie JSON, przeznaczone do importu w Grafanie. Każdy z plików reprezentuje osobny dashboard, umożliwiający monitorowanie i analizę metryk powiązanych z projektem.
 
-Aby skorzystać z tych dashboardów:
-1. Otwórz panel Grafana.
-2. Przejdź do **Dashboards > Import**.
-3. Wskaż plik JSON z folderu `grafana-dashboards` lub wklej jego zawartość.
-4. Zapisz dashboard i skonfiguruj źródło danych, jeśli to konieczne.
-
 ### 8.3 Procedura wykonawcza
 
 Aby uruchomić cały projekt w sposób uporządkowany, wykonaj następujące kroki:
 
 1. Upewnij się, że zainstalowałeś [niezbędne narzędzia](#6-metoda-instalacji).
-2. Zaincjalizuj [zależności projektu](#7-0-inicjalizacja-zaleznosci).
+2. Zaincjalizuj [zależności projektu](#7-0-inicjalizacja-zaleznosci), jeżeli nie zrobiłeś tego wcześniej.
 3. Uruchom [aplikację frontendową](#7-2-uruchamianie-aplikacji-frontendowej).
 4. Uruchom [monitoring (Grafana, Prometheus, OTel)](#7-3-uruchomienie-monitoringu).
 5. Uruchom [serwisy z Dapr za pomocą podejścia Infrastructure as Code](#7-4-podejscie-infrastructure-as-code).
 
+Aby skorzystać z gotowych dashboardów:
+1. Otwórz panel Grafana.
+2. Przejdź do **Dashboards > Import**.
+3. Wskaż plik JSON z folderu `grafana-dashboards` lub wklej jego zawartość.
+4. Zapisz dashboard i skonfiguruj źródło danych, jeśli to konieczne.
 
 ### 8.4 Prezentacja wyników
 
-*TO DO*
+#### Działająca aplikacja frontendowa
+a) Ekran przeglądu i oceny żartów
+![image](https://github.com/user-attachments/assets/51e0b648-3634-4a93-a964-6b306fe6287b)
 
----
+b) Ekran rankingu żartów
+![image](https://github.com/user-attachments/assets/0ad227af-5071-4218-add1-822c222631bd)
+
+#### Wybrane dashboardy
+a)Dashboard: Requests per endpoint
+
+Dashboard prezentuje liczbę żądań (requests) dla różnych endpointów w systemie. Wykorzystuje metryki z Prometheusa (`content_requests_total`, `delivery_requests_total`, `gateway_requests_total`, `ranking_requests_total`, `rating_requests_total`, `stats_requests_total`) i wyświetla je w formie wykresu kołowego.
+
+![image](https://github.com/user-attachments/assets/243f2112-6f61-4196-b85f-2f57181ffbc5)
+
+Aby zaimportować dashboard, użyj pliku JSON o identyfikatorze `0900e16d-3e55-4138-8a48-2ab97f74157a`.
+
+b) Dashboard: Server duration milliseconds sum
+
+Dashboard prezentuje sumaryczny czas obsługi żądań w milisekundach, korzystając z metryki Prometheusa `http_server_duration_milliseconds_sum`. Wyświetla dane w formie wykresu czasowego (Time Series), umożliwiając analizę wydajności serwera w ostatnich 15 minutach.
+
+
+
+Dashboard jest zapisany w pliku JSON o identyfikatorze `242f4221-44b3-4558-abd4-bead72f382e8` i może być łatwo zaimportowany do Grafany.
 
 ## 9. Wykorzystanie AI w projekcie
 
