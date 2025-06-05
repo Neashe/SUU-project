@@ -311,29 +311,54 @@ Aby skorzystać z gotowych dashboardów:
 
 ### 8.4 Prezentacja wyników
 
-#### Działająca aplikacja frontendowa
-a) Ekran przeglądu i oceny żartów
+### Działająca aplikacja frontendowa
+a) **Ekran przeglądu i oceny żartów**
+
 ![image](https://github.com/user-attachments/assets/51e0b648-3634-4a93-a964-6b306fe6287b)
 
-b) Ekran rankingu żartów
+b) **Ekran rankingu żartów**
+
 ![image](https://github.com/user-attachments/assets/0ad227af-5071-4218-add1-822c222631bd)
 
-#### Wybrane dashboardy
-a)Dashboard: Requests per endpoint
 
-Dashboard prezentuje liczbę żądań (requests) dla różnych endpointów w systemie. Wykorzystuje metryki z Prometheusa (`content_requests_total`, `delivery_requests_total`, `gateway_requests_total`, `ranking_requests_total`, `rating_requests_total`, `stats_requests_total`) i wyświetla je w formie wykresu kołowego.
+###  Wybrane dashboardy
+
+🔹 **Dashboard: Requests per endpoint**
+
+Ten dashboard prezentuje liczbę żądań (requests) dla różnych endpointów w systemie. Wykorzystuje metryki Prometheusa:
+
+```
+content_requests_total, delivery_requests_total, gateway_requests_total, ranking_requests_total, rating_requests_total, stats_requests_total
+```
+
+Wizualizuje dane w formie wykresu kołowego, pozwalając szybko zidentyfikować obciążenie poszczególnych endpointów.
 
 ![image](https://github.com/user-attachments/assets/243f2112-6f61-4196-b85f-2f57181ffbc5)
 
-Aby zaimportować dashboard, użyj pliku JSON o identyfikatorze `0900e16d-3e55-4138-8a48-2ab97f74157a`.
+Aby zaimportować ten dashboard, użyj pliku JSON o identyfikatorze:
+```
+0900e16d-3e55-4138-8a48-2ab97f74157a
+```
+🔹 **Dashboard: Server duration milliseconds sum**
 
-b) Dashboard: Server duration milliseconds sum
+Ten dashboard monitoruje sumaryczny czas obsługi żądań w milisekundach, wykorzystując metrykę Prometheusa:
 
-Dashboard prezentuje sumaryczny czas obsługi żądań w milisekundach, korzystając z metryki Prometheusa `http_server_duration_milliseconds_sum`. Wyświetla dane w formie wykresu czasowego (Time Series), umożliwiając analizę wydajności serwera w ostatnich 15 minutach.
+```
+http_server_duration_milliseconds_sum
+```
+
+Prezentuje dane w formie wykresu czasowego (Time Series), umożliwiając analizę wydajności serwera w ostatnich 15 minutach.
+
+![image](https://github.com/user-attachments/assets/1672e6c5-36bb-4bcd-a0b5-a992e40c41c9)
 
 
+Dashboard jest zapisany w pliku JSON o identyfikatorze:
+```
+242f4221-44b3-4558-abd4-bead72f382e8
+```
 
-Dashboard jest zapisany w pliku JSON o identyfikatorze `242f4221-44b3-4558-abd4-bead72f382e8` i może być łatwo zaimportowany do Grafany.
+---
+
 
 ## 9. Wykorzystanie AI w projekcie
 
