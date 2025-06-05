@@ -362,19 +362,64 @@ Dashboard jest zapisany w pliku JSON o identyfikatorze:
 
 ## 9. Wykorzystanie AI w projekcie
 
-*TO DO*
+W projekcie zastosowano modele AI (za pomocą narzędzia ChatGPT) do wsparcia procesu projektowania, dokumentacji oraz tworzenia komponentów. W szczególności wykorzystano AI w następujących obszarach:
+
+### Projektowanie i architektura
+- **Prompt:** "Zaproponuj architekturę mikrousług dla aplikacji z żartami, która pozwoli na przeglądanie, ocenianie, rankingowanie oraz dostarczanie treści."
+- **Efekt:** Powstała koncepcja 6 niezależnych serwisów z podziałem odpowiedzialności (Content, Rating, Ranking, Stats, Delivery, Gateway), co umożliwiło łatwą skalowalność i monitoring.
+
+### Obserwowalność i monitoring (OTEL + Dapr)
+- **Prompt:** "Jak za pomocą Dapr i OpenTelemetry mogę zbierać metryki z aplikacji FastAPI i wyświetlać je w Grafanie?"
+- **Efekt:** Opracowano kompletny pipeline monitoringu: FastAPI + Dapr → OTEL Collector → Prometheus → Grafana, wraz z własnymi metrykami aplikacyjnymi.
+
+### Dashboardy do Grafany
+- **Prompt:** "Zaproponuj przydatne metryki dla dashboardu Grafany monitorującego aplikację FastAPI opartą o Dapr i OTEL."
+- **Efekt:** Powstały dashboardy:
+  - Liczba żądań na endpoint
+  - Czas obsługi żądań (server duration)
+
+### Testowanie i scenariusze demo
+- **Prompt:** "Jakie dane i interakcje użytkowników powinienem zasymulować, aby dashboardy w Grafanie miały sensowne wartości?"
+- **Efekt:** Zaprojektowano sekwencję testową obejmującą przeglądanie żartów, ocenianie i tworzenie rankingu – co wygenerowało reprezentatywne dane metryczne.
+
+### Generowanie kodu i konfiguracji
+- **Prompt:** "Stwórz plik `docker-compose.yml`, który uruchamia Prometheus, Grafana i OpenTelemetry Collector."
+- **Efekt:** Skrócono czas konfiguracji środowiska monitoringu i uniknięto błędów konfiguracyjnych.
+
+### Dodatkowe przykłady zastosowania AI:
+- Uporządkowywanie dokumentacji
+- Generowanie skryptów pomocniczych (np. import dashboardów, testowych danych).
+- Optymalizacja zapytań PromQL i troubleshooting błędów metryk.
 
 ---
 
 ## 10. Podsumowanie – wnioski
 
-*TO DO*
+Projekt był okazją do praktycznego zastosowania architektury mikrousług, komunikacji asynchronicznej i rozwiązań z zakresu obserwowalności. Poniżej kluczowe wnioski z realizacji:
+
+### Co się sprawdziło:
+- **Dapr** znacząco uprościł komunikację między usługami oraz w łatwy sposób umożliwił uruchomienie całej aplikacji (wszystkie mikroserwisy).
+- **OpenTelemetry** i jego integracja z Prometheus i Grafaną umożliwiły obserwowalność działania systemu i prostego monitorowania bez potrzeby zaglądania do każdego serwisu i obserwacji logów, które mogłyby być stracone przy restarcie lub awarii.
+- **AI (ChatGPT)** pomogło przyspieszyć proces projektowania, debugowania i dokumentowania.
+
+### Wnioski:
+- Monitoring to nie tylko zbieranie danych, ale ich właściwa interpretacja i wizualizacja.
+- Dobrze zaprojektowana obserwowalność pozwala szybko diagnozować problemy i optymalizować aplikację.
+- AI może być realnym wsparciem w pracy inżynierskiej – szczególnie przy researchu, debugowaniu i automatyzacji powtarzalnych zadań.
+
 
 ---
 
 ## 11. Bibliografia / Referencje
 
-*TO DO*
+- **Dapr**: [https://docs.dapr.io](https://docs.dapr.io)
+- **OpenTelemetry**: [https://opentelemetry.io](https://opentelemetry.io)
+- **Prometheus**: [https://prometheus.io/docs/introduction/overview/](https://prometheus.io/docs/introduction/overview/)
+- **Grafana**: [https://grafana.com/docs/](https://grafana.com/docs/)
+- **Docker**: [https://docs.docker.com](https://docs.docker.com)
+- **Docker Compose**: [https://docs.docker.com/compose/](https://docs.docker.com/compose/)
+- **Python + FastAPI**: [https://fastapi.tiangolo.com](https://fastapi.tiangolo.com)
+- **OpenTelemetry Python SDK**: [https://opentelemetry.io/docs/instrumentation/python/](https://opentelemetry.io/docs/instrumentation/python/)
 
 ---
 
