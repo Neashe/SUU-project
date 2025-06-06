@@ -111,7 +111,7 @@ Jokes to aplikacja zbudowana w architekturze mikroserwisowej, umożliwiająca an
 Wszystkie serwisy komunikują się między sobą za pośrednictwem REST API. Aplikacja nie wymaga logowania ani kont użytkowników – działa całkowicie anonimowo.
 
 Poniżej zaprezentowano diagram architektury:
-![Diagram architektury](diagram.png)
+![Diagram architektury](diagrams/app_diagram.png)
 
 ---
 
@@ -131,12 +131,7 @@ Wszystkie usługi działają w jednej sieci Docker, dzięki czemu mogą się ze 
 
 ### Schemat komunikacji
 
-```
-[FastAPI + Dapr] --(metryki OTLP)--> [OpenTelemetry Collector] --(scrape)--> [Prometheus] --> [Grafana]
-          \                                          /
-           \------(metryki runtime Dapr)------------/
-
-```
+![Diagram komunikacji dotyczącej observability](diagrams/observability_diagram.png)
 
 - FastAPI wysyła własne metryki do OTEL Collectora przez protokół OTLP gRPC.
 
